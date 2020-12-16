@@ -8,3 +8,4 @@ sorl-thumbnail
 kavenegar
 django-widget-tweaks
 simplejson
+pandas
