@@ -24,7 +24,8 @@ python manage.py runserver 80
 then open your browser and type localhost to see the CMS :)
 * if you want to run it on other port, insted of 80 type your own port. for example: `python manage.py run server 8000`
 for Entering to admin panel just add `/panel` at the end of your site url.
-the default <bold>user name is: </br>`admin`
+<b>the default user name is:</b>`admin`
+and <b>The default password is:</b>`admin`
 
 
 ### Features
@@ -34,3 +35,5 @@ the default <bold>user name is: </br>`admin`
 * Theme Manager / Upload
 * Easy to develop
 * Comptible with Shared hosts which support python
+* Automatic cache system with AI
+* fast process cause of great algorithms
