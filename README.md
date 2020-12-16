@@ -22,4 +22,4 @@ python manage.py run server 80
 
 ```
 then open your browser and type localhost to see the CMS :)
-* if you want to run it on other port insted of 80 type your own port. for example: python manage.py run server 80
+* if you want to run it on other port insted of 80 type your own port. for example: python manage.py run server 8000
