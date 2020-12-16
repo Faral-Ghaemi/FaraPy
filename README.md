@@ -17,7 +17,7 @@ if you have installed the python on your system jost go to foldre press the Shif
 then run this tow lines of commands:
 
 ``` bash
-pip install -r requirement.txt
+pip install -r requirements.txt
 python manage.py runserver 80
 
 ```
