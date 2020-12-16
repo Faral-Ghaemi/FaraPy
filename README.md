@@ -18,7 +18,7 @@ then run this tow lines of commands:
 
 ``` bash
 pip install -r requirement.txt
-python manage.py run server 80
+python manage.py runserver 80
 
 ```
 then open your browser and type localhost to see the CMS :)
