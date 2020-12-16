@@ -36,4 +36,4 @@ and <b>The default password is:</b>`admin`
 * Easy to develop
 * Comptible with Shared hosts which support python
 * Automatic cache system with AI
-* fast process cause of great algorithms
+* Fast process cause of great algorithms
