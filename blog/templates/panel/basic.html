@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!-- Powered by FaraPy. https://faral.tech/  -->
+
+<html lang="fa">
+{% load static %}{% load thumbnail %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://cdn.faral.tech/panel-v1/panel/images/favicon.ico" type="image/ico"/>
+
+    <title>Frapay Management Panel - {% block title %}{% endblock %}</title>
+    <link href="https://cdn.faral.tech/panel-v1/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/panel/fonts.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/panel/icons.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/build/css/custom.min.css" rel="stylesheet">
+    <link href="https://cdn.faral.tech/panel-v1/panel/rtl.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.faral.tech/panel-v1/extra/jquery.dataTables.css">
+
+    <link href="https://cdn.faral.tech/panel-v1/extra/persian-datepicker.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.faral.tech/panel-v1/extra/selectize.bootstrap3.min.css">
+
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="/panel/" class="site_title"><i class="fy-farapy"></i> <span>FaraPy</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="profile clearfix">
+                    <div class="profile_info">
+                        <span>Welcome،</span>
+                        <h2>{{ portablee.full_name }}</h2>
+                    </div>
+                    <div class="profile_pic">
+                        {% thumbnail portablee.image "64x64" crop="center" as im %}
+                            <img src="{{ im.url }}" alt="{{ portablee.full_name }}" class="img-circle profile_img">
+                        {% endthumbnail %}
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <h3>General</h3>
+                        <ul class="nav side-menu">
+                            <li><a href="/panel/"><i class="fa fy-dashboard"></i> Dashboard </a>
+                            </li>
+                            {% if portablee.dpost == 1 %}
+                                <li><a><i class="fa fa-edit"></i> Posts <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/posts/">Posts</a></li>
+                                        <li><a href="/panel/ppostsCreate/">Add a Post</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if portablee.dcategory == 1 %}
+                                <li><a><i class="fa fy-list"></i> Categories <span
+                                        class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/category/">Categories</a></li>
+                                        <li><a href="/panel/pcategoryCreate/">Add a Category</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if portablee.dcomment == 1 %}
+                                <li>
+                                    <a href="/panel/comment/"><i class="fa fy-comment-discussion"></i> Commnets </a>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if portablee.dmultimedia == 1 %}
+                                <li><a><i class="fa fy-gallery-vid"></i> Media <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/multimedia/"><i class="fa fy-record"></i> Medias</a></li>
+                                        <li><a href="/panel/video/"><i class="fa fa-video-camera"></i> Videos</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if portablee.dmenu == 1 %}
+                                <li>
+                                    <a href="/panel/menu/"><i class="fa fy-grid"></i> Menus </a>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if setting.safahat == 1 and portablee.dsafahat == 1 %}
+                                <li><a><i class="fa fy-writing"></i> Pages <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/safahat/">Pages</a></li>
+                                        <li><a href="/panel/psafahatCreate/">Add page</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if setting.protable == 1 and portablee.dkarbaran == 1 %}
+                                <li><a><i class="fa fy-users"></i> Users <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/portable/">User Management</a></li>
+                                        <li><a href="/panel/portableCreate/">Add User</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if setting.protable == 1 and portablee.dkarbaran == 1 %}
+                                <li>
+                                    <a href="/panel/setting/1/"><i class="fa fy-admin-setting"></i> Site Setting </a>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="menu_section">
+                        <h3>Plugins</h3>
+                        <ul class="nav side-menu">
+                            {% if portablee.dslider == 1 %}
+                                <li><a><i class="fa fy-layers"></i> Slider <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/slider/">Slide Management</a></li>
+                                        <li><a href="/panel/psliderCreate/">Add Slide</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if portablee.dlink == 1 %}
+                                <li><a><i class="fa fy-connection"></i> Links <span
+                                        class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/link/">Link Management</a></li>
+                                        <li><a href="/panel/plinkCreate/">Add Link</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if setting.form == 1 and portablee.dform == 1 %}
+                                <li><a><i class="fa fy-shape"></i> Forms <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/form/">Form Management</a></li>
+                                        <li><a href="/panel/addform/">New Form</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if  portablee.dthemeeditor == 1 %}
+                                <li><a><i class="fa fy-paint-roller"></i> Appearance <span
+                                        class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/themes/">Themes</a></li>
+                                        <li><a href="/panel/themeeditor/">Theme Editor</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if setting.moshtari == 1 and portablee.dhavadaran == 1 %}
+                                <li><a><i class="fa fy-users-1"></i> Customers Club <span
+                                        class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/Moshtarian/">Customers Management</a></li>
+                                        <li><a href="/panel/pMoshtariCreate/">Add Customer</a></li>
+                                        <li><a href="/panel/Moshtariancopen/">Crate a Coupon</a></li>
+                                        <li><a href="/panel/paycopen/">Coupons Check</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if setting.task_manegar == 1 and portablee.dtaskmanager == 1 %}
+                                <li>
+                                    <a><i class="fa fy-time"></i> Task Manager <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/task_manegar/">Tasks List</a></li>
+                                        <li><a href="/panel/time_cards/">Time Cards</a></li>
+                                    </ul>
+
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            {% if setting.ads == 1 and portablee.dads == 1 %}
+                                <li><a><i class="fa fa-bullhorn"></i> ADS <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/panel/ads/">ADS Managements</a></li>
+                                        <li><a href="/panel/padsCreate/">Add ADS</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                            <li>
+                                <a href="/panel/tickets/"><i class="fa fy-comment-discussion"></i> Tickets </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- /sidebar menu -->
+
+                <!-- /menu footer buttons -->
+                <div class="sidebar-footer hidden-small">
+                    <a href="/panel/setting/1/" data-toggle="tooltip" data-placement="top" title="Site Settings">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    </a>
+                    <a href="https://faral.tech/support" target="_blank" data-toggle="tooltip" data-placement="top"
+                       title="FaraPy Support">
+                        <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                    </a>
+                    <a href="/panel/portableUpdate/{{ portablee.id }}/" data-toggle="tooltip" data-placement="top"
+                       title="Profile Setting">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    </a>
+                    <a href="{% url 'logout' %}?next={{ request.path }}" data-toggle="tooltip" data-placement="top"
+                       title="Logout" href="login.html">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    </a>
+                </div>
+                <!-- /menu footer buttons -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <div class="nav toggle">
+                    <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div>
+                <nav class="nav navbar-nav">
+                    <ul class=" navbar-right">
+                        <li class="nav-item" style="padding-right: 15px;">
+                            <a class="fy-g-link" href="/">Show My Website</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            {% if natije != 0 %}
+                <div class=" alert alert-success alt green-bg natije">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>{{ natije }}</strong>
+                </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                FaraPy,powered by<a href="https://faral.tech">Faral</a>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+<script src="https://cdn.faral.tech/panel-v1/vendors/jquery/dist/jquery.min.js"></script>
+
+<script src="https://cdn.faral.tech/panel-v1/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.faral.tech/panel-v1/vendors/fastclick/lib/fastclick.js"></script>
+<!--
+    <script src="{% static 'vendors/nprogress/nprogress.js' %}"></script>
+	
+    <script src="{% static 'vendors/Chart.js/dist/Chart.min.js' %}"></script>
+	-->
+<script src="https://cdn.faral.tech/panel-v1/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+
+
+<script src="https://cdn.faral.tech/panel-v1/vendors/iCheck/icheck.min.js"></script>
+<!--
+    <script src="{% static 'vendors/Flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'vendors/Flot/jquery.flot.time.js' %}"></script>
+	
+    <script src="{% static 'vendors/flot-spline/js/jquery.flot.spline.min.js' %}"></script>
+    <script src="{% static 'vendors/DateJS/build/production/date.min.js' %}"></script>
+	-->
+<script type="text/javascript" charset="utf8" src="https://cdn.faral.tech/panel-v1/extra/jquery.dataTables.js"></script>
+<script src="https://cdn.faral.tech/panel-v1/build/js/custom.min.js"></script>
+
+<script src="https://cdn.faral.tech/panel-v1/extra/persian-date.min.js"></script>
+<script src="https://cdn.faral.tech/panel-v1/extra/persian-datepicker.min.js"></script>
+<script src="https://cdn.faral.tech/panel-v1/extra/selectize.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('select').selectize({});
+    });
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+    });
+</script>
+<script>
+    $('.date').persianDatepicker({
+
+        format: 'YYYY-MM-DD',
+        autoClose: true,
+        calendarType: 'gregorian',
+    });
+</script>
+{% block js %}
+
+{% endblock %}
+</body>
+</html>

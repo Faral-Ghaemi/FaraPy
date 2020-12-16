@@ -1,0 +1,63 @@
+
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %}Pages List{% endblock title %}
+{% load widget_tweaks %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                    Pages
+</p>
+                          </header> <legend> </legend>
+
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                              <th><i class="fa fa-circle"></i>&nbspSubject</th>
+
+
+                              <th class="hidden-phone"><i class="fa fa-user"></i>&nbspAuthor</th>
+
+                              <th class="hidden-phone"><i class="fa fa-eye"></i>&nbspViews</th>
+
+                              <th class="hidden-phone"><i class="fa fa-calendar"></i>&nbspDate </th>
+
+                              <th>  <a href="/panel/psafahatCreate/"><button class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Add</button></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in safe %}
+
+                          <tr class="odd gradeX">
+                              <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                              <td><a href="/panel/psafahatUpdate/{{g.id}}/">{{g.title}}</a></td>
+                              <td class="center hidden-phone">{{g.author}}</td>
+                              <td class="center hidden-phone">{{g.view}}</td>
+                              <td class="hidden-phone">{{g.created_date}}</td>
+
+                              <td>
+                                <a href="/panel/psafahatUpdate/{{g.pk}}/"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                                <a href="/panel/psafahatDelete/{{g.pk}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
+
+                              </td>
+
+                          </tr>
+                          {% endfor %}
+
+                          </tbody>
+                          </table>
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}

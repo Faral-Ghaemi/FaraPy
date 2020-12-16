@@ -1,0 +1,75 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %} Emails List {% endblock title %}
+{% block content %}
+
+
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                            Customers Club
+                            </p>
+
+                          </header> <legend> </legend>
+
+                          <form class="form-horizontal tasi-form" action="" method="post">
+                            {% csrf_token %}
+
+                          <div class="form-group col-lg-6 " style='margin:25px;'>
+                            <label>Text </label>
+                            <textarea class="form-control " name='text' rows="3" placeholder="This message will be sent to all members of the customers club"></textarea>
+
+                            <br>
+
+                            <div class="form-group">
+                                <label for="inputEmail1" class="col-lg-2 control-label"> Coupon Amount </label>
+                                <div class="col-lg-10">
+                                    <input type="number" name='copen' class="form-control" id="copen" placeholder="">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"> Send </button>
+                          </div>
+
+                          </form>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th><i class="fa fa-pencil"></i>&nbspFull Name</th>
+                              <th><i class="fas fa-mobile-alt"></i>&nbspMobile</th>
+                              <th><i class="fas fa-ticket-alt"></i>&nbspCoupon Amount</th>
+                              <th>  <a href="/panel/pmoshtaricopenCreate/"><button class="btn btn-success btn-xs"><i class="fa fa-plus"></i>Add</button></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in copens %}
+
+                          <tr class="odd gradeX">
+
+                            <td>{{g.moshtari.full_name}}</td>
+
+                            <td>{{g.moshtari.phone}}</td>
+                            <th>{{g.copeni}}</th>
+                          <th>   <a href="/panel/pmoshtaricopenDelete/{{g.pk}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button></th>
+
+                          </tr>
+                          {% endfor %}
+
+                          </tbody>
+                          </table>
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}
+    {% block js %}
+
+
+{% endblock %}

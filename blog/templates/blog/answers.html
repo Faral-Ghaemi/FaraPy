@@ -1,0 +1,55 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %}Answers List{% endblock title %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            Answers List for {{form.title}}
+
+                          </header> <legend> </legend>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                              {% for g in form.field_set.all|slice:":4" %}
+                              <th><i class="fa fa-list-alt"></i> {{g.title}}</th>
+                              {% endfor %}
+                              <th>Number of Answers</th>
+                              <th>date</th>
+                              <th></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for gg in form.answer_set.all %}
+
+                          <tr class="odd gradeX">
+                              <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                              {% for g in gg.answerfield_set.all|slice:":4" %}
+                              <td><a href="/panel/answer/{{gg.id}}/">{{g.title}}</a></td>
+                              {% endfor %}
+                              <td><a href="#">{{form.answer_set.all.count}}</a></td>
+                              <td>{{gg.date}}</td>
+                              <td>
+                                <a href="/panel/da/{{gg.id}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-delete"></i> Remove</button>
+                                  <a href="/panel/answer/{{gg.id}}/"><button class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Show</button>
+
+                              </td>
+
+                          </tr>
+                          {% endfor %}
+
+                          </tbody>
+                          </table>
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}

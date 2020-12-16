@@ -1,0 +1,67 @@
+{% extends 'panel/basic.html' %}
+{% block content %}
+    {% load static %}
+
+    <!--main content start-->
+
+    <!-- page start-->
+
+
+            <section class="panel box box-success">
+                <header class="panel-heading">
+                    <p align="center">
+                        Users<br>
+                    </p>
+
+                    {{ msg }}
+                </header>
+
+                <legend></legend>
+
+                <table id="table_id" class="table table-striped border-top" id="sample_1">
+                    <thead>
+
+                    <tr>
+
+
+                        <td><i class="fa fa-restroom"></i>&nbsp
+                            Sex
+                        </td>
+                        <td><i class="fa fa-pencil"></i>&nbsp
+                            Name
+                        </td>
+
+                        <td><a href="/panel/portableCreate/">
+                            <button class="btn btn-success btn-xs"><i class="fa fa-plus "></i> Add</button></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for u in portable %}
+                        <tr>
+
+
+                            <td>
+                                {{ u.get_sex_display }}
+                            </td>
+                            <td>
+                                {{ u.full_name }}
+                            </td>
+
+
+
+                            <td>
+                                <a href="/panel/portableUpdate/{{ u.pk }}/">
+                                    <button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                                    <a href="/panel/portableDelete/{{ u.pk }}/">
+                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+    <!-- page end-->
+    </section>
+{% endblock %}

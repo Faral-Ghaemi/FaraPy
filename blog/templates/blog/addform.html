@@ -1,0 +1,38 @@
+
+{% extends "panel/basic.html" %}
+{% load widget_tweaks %}
+{% block content %}
+{% load static %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+<script src="//cdn.jsdelivr.net/jspersiancal/0.2.1/js-persian-cal.min.js"></script>
+
+                      <section class="panel">
+
+
+
+                          <header class="panel-heading"><center>
+                          Please complete.
+                          </center></header><br>
+
+                          <div class="panel-body">
+                              <form class="form-horizontal tasi-form" method="post" action="" required>
+                                {% csrf_token %}
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Form title: </label>
+                                    <div class="col-sm-10 ">
+                                      <input type="text" name="title" class="form-control">
+                                              </div>
+                                </div>
+
+                                  <button type="submit" class="btn btn-success"> Send </button>
+
+                              </form>
+                          </div>
+                      </section>
+
+              <!-- page end-->
+{% endblock %}

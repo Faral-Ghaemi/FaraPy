@@ -1,0 +1,352 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %} {% load farapy %}
+{% block title %}Theme Editor{% endblock title %}
+{% load widget_tweaks %}
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <a href="#myModal-1" data-toggle="modal" class="btn btn-xs btn-success">Create File</a>
+    <a href="#myModal-2" data-toggle="modal" class="btn btn-xs btn-success">Upload File</a>
+    <a href="#myModal-3" data-toggle="modal" class="btn btn-xs btn-success">Create New Folder</a>
+    <a href="/panel/commpresstheme/?folder={{ folder }}" class="btn btn-xs btn-success">Create theme ZIP backup</a>
+	Font-Size:
+    <input id="fontsize" type="number" class="editor-font-size" value="{{ tab.fontsize }}" >
+	Auto Save:
+    <input id="autosave" type="number" class="editor-auto-save" value="{{ tab.autosave }}" min="0">
+
+
+    <button id="send" class="btn btn-outline-success pull-right" type="submit">Save</button>
+
+
+
+    <div class="theme-editor">
+        <div class="fara-manager">
+            <ul class="fara-files-list">
+                <div class="files-lists-btns">
+                    <a href="/panel/themeeditor/?folder={% backfolder folder %}" class="back-btn">↩</a>
+                    <a onclick="goBack()" class="back-btn">↪</a>
+                </div>
+
+                {% for foo in folders %}
+
+                    <li class="over fara-directory">
+                        <button id="btn_toggle-{% cslash foo %}" class="opentree-btn" onClick="reply_click(this.id)"><i
+                                id="btn_toggle-{% cslash foo %}-data"
+                                class="fy-002-folder"></i>
+                        </button>
+                        <a href="?folder={{ foo }}">{% filename foo %}</a>
+                        <a href="/panel/delfolder/?file={{ foo }}" class="btn btn-danger btn-sm pull-right"><i
+                                class="fa fa-trash" aria-hidden="true"></i></a>
+
+                        <ul id="btn_toggle-{% cslash foo %}s" class="close-file">{% subdirs foo %}</ul>
+                    </li>
+                    <div class="clear"></div>
+
+                {% endfor %}
+                {% for foo in staticfiles %}
+
+
+                    {% if s == foo %}
+                        <li class="over file-list-active"><a
+                                href="?file={{ foo }}&folder={{ folder }}">{% suffix foo %} {% filename foo %}</a>
+                            <a href="/panel/delfile/?file={{ foo }}" class="btn btn-danger btn-sm pull-right"><i
+                                    class="fa fa-trash" aria-hidden="true"></i></a>
+                        </li>
+                    {% else %}
+                        {% extension foo as ex %}
+                        {% if ex != 1 %}
+                            {#                                open file for edit#}
+                            <li class="over"><a
+                                    href="?file={{ foo }}&folder={{ folder }}">{% suffix foo %} {% filename foo %}</a>
+                                <a href="/panel/delfile/?file={{ foo }}&folder={{ folder }}"
+                                   class="btn btn-danger btn-sm pull-right"><i
+                                        class="fa fa-trash" aria-hidden="true"></i></a>
+                            </li>
+                        {% else %}
+                            {#                                download file#}
+                            <li class="over"><a
+                                    href="{% fileurlfordownload foo %}">{% suffix foo %} {% filename foo %}</a>
+                                <a href="/panel/delfile/?file={{ foo }}&folder={{ folder }}"
+                                   class="btn btn-danger btn-sm pull-right"><i
+                                        class="fa fa-trash" aria-hidden="true"></i></a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+
+
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        <div class="fara-code-editor">
+
+            <div id="editor">{{ t }}</div>
+
+
+        </div>
+    </div>
+
+
+
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-1"
+         class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 class="modal-title">Add File</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-horizontal">
+                        <form action="/panel/newfile/?folder={{ folder }}/" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="inputEmail1" class="col-lg-3 control-label">File Name</label>
+                                <div class="col-lg-9">
+                                    <input type="text" name='name' class="form-control" placeholder="index.html">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-3 col-lg-9">
+                                    <button id="send" type="submit" class="btn btn-info">Create File</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-2"
+         class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 class="modal-title">File Upload</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-horizontal">
+                        <form action="/panel/upfile/?folder={{ folder }}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="inputEmail1" class="col-lg-2 control-label">File Ipload</label>
+                                <div class="col-lg-10">
+                                    <input type="file" name='file' class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button id="send" type="submit" class="btn btn-info">File Upload</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-3"
+         class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                    <h4 class="modal-title">Create new folder</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-horizontal">
+                        <form action="/panel/newfolder/?folder={{ folder }}" method="post"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="inputEmail1" class="col-lg-2 control-label">Folder name</label>
+                                <div class="col-lg-10">
+                                    <input type="text" name='name' class="form-control" placeholder="Images">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button id="send" type="submit" class="btn btn-info">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block js %}
+
+    <script src="https://cdn.faral.tech/panel/js/ace.min.js"></script>
+<script src="https://cdn.faral.tech/panel/js/ext-language_tools.min.js"></script>
+<script src="https://cdn.faral.tech/panel/js/ext-searchbox.min.js"></script>
+<script src="https://cdn.faral.tech/panel/js/mode-django.min.js"></script>
+<script src="https://cdn.faral.tech/panel/js/theme-gruvbox.min.js"></script>
+    <!-- partial -->
+    <script>
+
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/gruvbox");
+
+        editor.getSession().setMode("ace/mode/{% if pasvand == 'js' %}javascript{% else %}{{ pasvand }}{% endif %}");
+        editor.getSession().on('change', function () {
+            document.getElementById("send").classList.remove('btn-outline-success');
+            document.getElementById("send").classList.add('btn-warning');
+            document.getElementById("send").innerHTML = 'Save';
+
+        });
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true,
+            fontSize: document.getElementById('fontsize').value + "pt",
+        });
+        $('#fontsize').change(function () {
+            editor.setOptions({
+                fontSize: document.getElementById('fontsize').value + "pt",
+            });
+            $.ajax({
+                url: '/panel/tabupdate/',
+                data: {
+                    'fontsize': document.getElementById('fontsize').value,
+                    'autosave': document.getElementById('autosave').value,
+                },
+                type: 'post',
+                cache: false,
+                success: function updateDiv() {
+                }
+            });
+        });
+        $(window).keypress(function (event) {
+            if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
+            alert("Ctrl-S pressed");
+            event.preventDefault();
+            return false;
+        });
+
+        var isCtrl = false;
+        document.onkeyup = function (e) {
+            if (e.keyCode == 17) isCtrl = false;
+        }
+
+        document.onkeydown = function (e) {
+            if (e.keyCode == 17) isCtrl = true;
+            if (e.keyCode == 83 && isCtrl == true) {
+                $.ajax({
+                    url: '?file={{ s }}',
+                    data: {'content': editor.getValue(),},
+                    type: 'post',
+                    cache: false,
+                    success: function updateDiv() {
+                        $("#ref").load(window.location.href + " #ref");
+                    }
+                });
+                document.getElementById("send").classList.remove('btn-warning');
+                document.getElementById("send").classList.add('btn-outline-success');
+                document.getElementById("send").innerHTML = 'Saved!';
+
+                return false;
+            }
+        }
+
+
+        $(function () {
+            $("#send").click(function () {
+                $.ajax({
+                    url: '?file={{ s }}',
+                    data: {'content': editor.getValue(),},
+                    type: 'post',
+                    cache: false,
+                    success: function updateDiv() {
+                        $("#ref").load(window.location.href + " #ref");
+                        document.getElementById("send").classList.remove('btn-warning');
+                        document.getElementById("send").classList.add('btn-outline-success');
+                        document.getElementById("send").innerHTML = 'Saved!';
+
+                    }
+                });
+            });
+        });
+
+        function myTimer() {
+            $.ajax({
+                url: '?file={{ s }}',
+                data: {'content': editor.getValue(),},
+                type: 'post',
+                cache: false,
+                success: function updateDiv() {
+                    $("#ref").load(window.location.href + " #ref");
+                    document.getElementById("send").classList.remove('btn-warning');
+                    document.getElementById("send").classList.add('btn-outline-success');
+                    document.getElementById("send").innerHTML = 'Saved!';
+
+                }
+            });
+        }
+
+        if (document.getElementById('autosave').value == 0) {
+            var f = 0
+        } else {
+            clearInterval(myVar);
+            var f = document.getElementById('autosave').value * 1000;
+        var myVar = setInterval(myTimer, f);
+        }
+
+        $('#autosave').change(function () {
+            $.ajax({
+                url: '/panel/tabupdate/',
+                data: {
+                    'fontsize': document.getElementById('fontsize').value,
+                    'autosave': document.getElementById('autosave').value,
+                },
+                type: 'post',
+                cache: false,
+                success: function updateDiv() {
+                }
+            });
+
+            if (document.getElementById('autosave').value == 0) {
+                clearInterval(myVar);
+            } else {
+                clearInterval(myVar);
+                var ff = document.getElementById('autosave').value * 1000;
+                myVar = setInterval(myTimer, ff);
+            }
+        });
+
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function reply_click(clicked_id) {
+            var id = clicked_id;
+            $('#' + id + 's').toggleClass("open-file");
+            $('#' + id + '-data').toggleClass("fy-004-data");
+
+        }
+    </script>
+
+
+
+{% endblock %}

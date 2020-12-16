@@ -1,0 +1,53 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %}Videos{% endblock title %}
+{% load widget_tweaks %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                        Videos List
+                        </p>
+
+                          </header> <legend> </legend>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                              <th><i class="fa fa-ellipsis-h"></i>&nbspSubject</th>
+                              <th><i class="fa fa-bars"></i>&nbspDescription</th>
+                              <th class="hidden-phone"><i class="fa fa-film"></i>&nbspVideo</th>
+                              <th>  <a href="/panel/pvideoCreate/"><button class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Add</button></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in video %}
+
+                          <tr class="odd gradeX">
+                              <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                              <td><a href="/panel/pvideoUpdate/{{g.id}}/">{{g.mozo}}</a></td>
+                              <td>{{g.tozihat}}</td>
+                              <td class="hidden-phone">{{g.video}}</td>
+                              <td>
+                                <a href="/panel/pvideoUpdate/{{g.pk}}/"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                                <a href="/panel/pvideoDelete/{{g.pk}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
+                              </td>
+
+                          </tr>
+                          {% endfor %}
+
+                          </tbody>
+                          </table>
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}

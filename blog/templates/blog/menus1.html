@@ -1,0 +1,216 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %} Menus List {% endblock title %}
+{% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+<link href="{% static 'bs-iconpicker/css/bootstrap-iconpicker.min.css' %}" rel="stylesheet">
+<link href="{% static 'bs-iconpicker/css/rtl.css' %}" rel="stylesheet">
+
+
+              <!-- page start-->
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                            Menus List
+                            </p>
+
+                          </header> <legend> </legend>
+						  </section>
+
+
+
+
+
+
+
+
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading clearfix"><h5 class="pull-left"> List </h5>
+                                            <div class="pull-right">
+                                                <button id="btnReload" type="button" class="btn btn-default">
+                                                  Show Menu List  <i class="glyphicon glyphicon-triangle-left"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body" id="cont">
+                                            <ul id="myEditor" class="sortableLists list-group">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button id="btnOut" type="button" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Preview</button>
+                                    </div>
+                                    <div class="form-group"><textarea id="out" class="form-control" cols="50" rows="10"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <div class="menusaz">
+                                    <div class="accord1">
+                                        <ul>
+                                          <li>
+                                            <p> Add Category </p>
+
+                                            <div class="accord-content">
+                                              <select id="select-category" placeholder="Select/Search category">
+                                                <option value="">Select Category</option>
+                                                {% for x in categories %}
+                                                <option value="{{x.id}}">{{x.title}}</option>
+                                                {% endfor %}
+                                              </select>
+                                              <input type="hidden" name="" value="">
+                                              <button id="btnAdd" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Add </button>
+                                            </div>
+                                          </li>
+                                          <li>
+                                            <p> Add/Edit Link </p>
+                                            <div class="accord-content">
+                                              <div class="panel panel-primary">
+                                                  <div class="panel-heading"> Edit Iitem</div>
+                                                  <div class="panel-body">
+                                                      <form id="frmEdit" class="form-horizontal">
+                                                          <div class="form-group">
+                                                              <label for="text" class="col-sm-2 control-label"> Link Title </label>
+                                                              <div class="col-sm-10">
+                                                                  <div class="input-group">
+                                                                      <input type="text" class="form-control item-menu" name="text" id="text" placeholder="Link title">
+                                                                      <div class="input-group-btn">
+                                                                          <button type="button" id="myEditor_icon" class="btn btn-default" data-iconset="fontawesome"></button>
+                                                                      </div>
+                                                                      <input type="hidden" name="icon" class="item-menu">
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group">
+                                                              <label for="href" class="col-sm-2 control-label"> Link Aaddress </label>
+                                                              <div class="col-sm-10">
+                                                                  <input type="text" class="form-control item-menu" style="direction:ltr; font-family:Courier New;" id="href" name="href" placeholder="http://">
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group">
+                                                              <label for="target" class="col-sm-2 control-label"> Link Type </label>
+                                                              <div class="col-sm-10">
+                                                                  <select name="target" id="target" class="form-control item-menu">
+                                                                      <option value="_self">The Page Itself</option>
+                                                                      <option value="_blank"> The New Tab </option>
+                                                                      <option value="_top"> The New Window </option>
+                                                                  </select>
+                                                              </div>
+                                                          </div>
+                                                          <div class="form-group">
+                                                              <label for="title" class="col-sm-2 control-label"> Explanation </label>
+                                                              <div class="col-sm-10">
+                                                                  <input type="text" name="title" class="form-control item-menu" id="title" placeholder="Link description">
+                                                              </div>
+                                                          </div>
+                                                      </form>
+                                                  </div>
+                                                  <div class="panel-footer">
+                                                      <button type="button" id="btnUpdate" class="btn btn-primary" disabled><i class="fa fa-refresh"></i> Refresh </button>
+                                                      <button type="button" id="btnAdd" class="btn btn-success"><i class="fa fa-plus"></i> Add </button>
+                                                  </div>
+                                              </div>
+                                            </div>
+                                          </li>
+                                          <li>
+                                            <p> Add page </p>
+                                            <div class="accord-content">
+                                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                            </div>
+                                          </li>
+
+                                        </ul>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+              <!-- page end-->
+
+
+    {% endblock %}
+    {% block js %}
+
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+<script src="{% static 'bs-iconpicker/js/iconset/iconset-fontawesome-4.7.0.min.js' %}"></script>
+<script src="{% static 'bs-iconpicker/js/bootstrap-iconpicker.js' %}"></script>
+<script src="{% static 'jquery-menu-editor.min.js' %}"></script>
+
+<script type="text/javascript">
+  $('.accord1 li p').click(function(){
+$(this).next(".accord-content").slideToggle();
+$(this).closest("li").siblings().find('.accord-content').slideUp();
+});
+</script>
+<script>
+  $(document).ready(function () {
+    $('select').selectize({
+        sortField: 'text'
+    });
+});
+</script>
+<script>
+  var acc = document.getElementsByClassName("sa-accordion");
+  var i;
+
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      this.classList.toggle("sa-active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  }
+</script>
+
+<script>
+    jQuery(document).ready(function () {
+        // menu items
+        var strjson = [{"href":"http://home.com","icon":"fa fa-home","text":"Home", "target": "_top", "title": "My Home"},{"icon":"fa fa-bar-chart-o","text":"Opcion2"},{"icon":"fa fa-cloud-upload","text":"Opcion3"},{"icon":"fa fa-crop","text":"Opcion4"},{"icon":"fa fa-flask","text":"Opcion5"},{"icon":"fa fa-map-marker","text":"Opcion6"},{"icon":"fa fa-search","text":"Opcion7","children":[{"icon":"fa fa-plug","text":"Opcion7-1","children":[{"icon":"fa fa-filter","text":"Opcion7-1-1"}]}]}];
+        //icon picker options
+        var iconPickerOptions = {searchText: 'Buscar...', labelHeader: '{0} de {1} Pags.'};
+        //sortable list options
+        var sortableListOptions = {
+            placeholderCss: {'background-color': 'cyan'}
+        };
+
+        var editor = new MenuEditor('myEditor', {listOptions: sortableListOptions, iconPicker: iconPickerOptions, labelEdit: 'ویرایش'});
+        editor.setForm($('#frmEdit'));
+        editor.setUpdateButton($('#btnUpdate'));
+
+        $('#btnReload').on('click', function () {
+            editor.setData(strjson);
+        });
+
+        $('#btnOut').on('click', function () {
+            var str = editor.getString();
+            $("#out").text(str);
+        });
+
+        $("#btnUpdate").click(function(){
+            editor.update();
+        });
+
+        $('#btnAdd').click(function(){
+            editor.add();
+        });
+    });
+</script>
+
+{% endblock %}

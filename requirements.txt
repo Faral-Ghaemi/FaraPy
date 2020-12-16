@@ -1,0 +1,10 @@
+wheel
+django==2.2.7
+pillow
+django_jalali
+jdatetime
+django-ckeditor
+sorl-thumbnail
+kavenegar
+django-widget-tweaks
+simplejson

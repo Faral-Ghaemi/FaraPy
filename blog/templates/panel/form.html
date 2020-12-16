@@ -1,0 +1,55 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %}Forms List{% endblock title %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+
+                              <p align="center">
+                            Forms Llist
+                            </p>
+
+
+
+                          </header> <legend> </legend>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                              <th><i class="fa fa-circle"></i>&nbspTitle</th>
+                              <th><i class="fa fa-list-ol"></i>&nbspNumber of Replies</th>
+                                <th></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in form %}
+
+                          <tr class="odd gradeX">
+                              <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                              <td><a href="/panel/fields/{{g.id}}/">{{g.title}}</a></td>
+                              <td><a href="#">{{g.answer_set.all.count}}</a></td>
+                              <td>
+                                <a href="/panel/answers/{{g.id}}/"><button class="btn btn-success btn-xs"><i class="far fa-file-alt"></i> Show Answers</button>
+
+                                <a href="/panel/formUpdate/{{g.pk}}/"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                                <a href="/panel/formDelete/{{g.pk}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
+                              </td>
+
+                          </tr>
+                          {% endfor %}
+
+                          </tbody>
+                          </table>
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}

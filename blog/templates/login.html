@@ -1,0 +1,47 @@
+<!DOCTYPE html>{% load static %}
+<!-- Powered by FaraPy. https://faral.tech/  -->
+
+<html lang="fa">
+<head>
+    <link rel="stylesheet" href="https://cdn.faral.tech/panel-v1/css/login.css">
+    <link rel="stylesheet" href="https://cdn.faral.tech/panel-v1/css/fonts.css">
+    <link rel="stylesheet" href="https://cdn.faral.tech/panel-v1/css/icons.css">
+  
+</head>
+<body>
+    <div class="login-page">
+        <div class="form">
+            <div class="login-logo"><img src="https://cdn.faral.tech/panel-v1/img/faral-new-logo.png"> </div>
+            <form class="recovery-form" action="" method="post">
+                <input type="text" placeholder="Email"/>
+                <button>Forgot Password</button>
+                <p class="message"><a href="#">Back</a></p>
+            </form>
+            <form class="login-form" action="" method="post">
+                <input type="text" name="username" placeholder="Username"/>
+                <input type="password" name="password" placeholder="Password"/>
+                <button>Login</button>
+                <p class="message">Forgot Password? <a href="#">Forgot Password</a></p>
+            </form>
+        </div>
+    </div>
+    <script>
+        $('.message a').click(function(){
+            $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+        });
+    </script>
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+<div class="cpr">Version: 1.32.0</div>
+</body>
+</html>

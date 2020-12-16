@@ -1,0 +1,62 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %}Multimedia List{% endblock title %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                          Multimedia List
+                          </p>
+
+                          </header> <legend> </legend>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                              <th><i class="fa fa-circle"></i>&nbspSubject</th>
+                              <th><i class="fa fa-link"></i>&nbsp Slug</th>
+                              <th class="hidden-phone"><i class="fa fa-user"></i>&nbspAuthor</th>
+
+
+                              <th class="hidden-phone"><i class="fa fa-calendar"></i>&nbspDate</th>
+                              <th class="hidden-phone"><i class="fa fa-check"></i>&nbspStatus</th>
+                              <th class="hidden-phone"><i class="fa fa-image"></i>&nbspImage</th>
+                              <th>  <a href="/panel/pmultimediaCreate/"><button class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Add</button></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in multimedia %}
+
+                          <tr class="odd gradeX">
+                              <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                              <td><a href="/panel/pmultimediaUpdate/{{g.id}}/">{{g.title}}</a></td>
+                              <td>{{g.slug}}</td>
+                              <td class="hidden-phone">{{g.author}}</td>
+
+
+                              <td>{{g.created_date}}</td>
+                              <td class="hidden-phone">{{g.get_status_display}}</td>
+                              <td class="center hidden-phone">{{g.image}}</td>
+                              <td>
+                                <a href="/panel/pmultimediaUpdate/{{g.pk}}/"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                                <a href="/panel/pmultimediaDelete/{{g.pk}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
+                              </td>
+
+                          </tr>
+                          {% endfor %}
+
+                          </tbody>
+                          </table>
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}

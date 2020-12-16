@@ -1,0 +1,457 @@
+{% extends 'panel/basic.html' %}
+{% load static %}{% load farapy %}
+{% block title %}Dashboard{% endblock %}
+
+
+{% block content %}
+
+
+    <div class="dash-items">
+
+        {% if flag == 0 %}
+            <div class="dash-item fa fa-clock-o" style="background-color:#F06C71;">
+                <span class="fara-clock fara-clock-acrive">You started working at {{ induty.in_time }}</span>
+                <button class="btn btn-success" id='send'><i class="fa fa-sign-out"></i> Clock-out</button>
+            </div>
+        {% else %}
+            <div class="dash-item fa fa-clock-o" style="background-color:#20C5CB;">
+                <span class="fara-clock">Click to start working</span>
+                <button class="btn btn-primary " id='send1'><i class="fa fa-sign-out"></i> Clock-in</button>
+            </div>
+        {% endif %}
+        {% if comments > 0 %}
+            <div class="dash-item">
+                <span>non-verified comments</span>
+                <h3>{{ comments.count }}</h3>
+            </div>
+        {% else %}
+            <div class="dash-item fa fa-users">
+                <span class="dash-item-first">Number of Users</span>
+                <h3>{{ karbaran }}</h3>
+            </div>
+
+        {% endif %}
+        {% if answer > 0 %}
+            <div class="dash-item">
+                <span>Number of today replies</span>
+                <h3>{{ answer }}</h3>
+            </div>
+        {% else %}
+            <div class="dash-item fa fa-female">
+                <span>Number of Clients</span>
+                <h3>{{ customer }}</h3>
+            </div>
+        {% endif %}
+        {% if domainexpired < 100 and domainexpired != -1 %}
+            <div class="dash-item">
+                <span>Remaining days of the domain</span>
+                <h3>{{ domainexpired }}</h3>
+            </div>
+        {% else %}
+            <div class="dash-item fa fa-sitemap">
+                <span>Number of Categories</span>
+                <h3>{{ categories }}</h3>
+            </div>
+        {% endif %}
+    </div>
+    <!-- /top tiles -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+
+
+            <div class="dashboard_graph">
+
+                <div class="row x_title">
+                    <div class="col-md-6">
+                        <h3>Content Chart <small>Number of added content in a month</small></h3>
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+
+                <div class="col-md-9 col-sm-9 ">
+                    <canvas id="buyers"></canvas>
+
+                </div>
+                <div class="col-md-3 col-sm-3  bg-white">
+                    <div class="x_title">
+                        <h2>extra notifications</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 ">
+                        <div>
+                            <p>Remaining software license</p>
+                            <div class="">
+                                <div class="progress progress_sm" style="width: 76%;">
+                                    <div class="progress-bar bg-green" role="progressbar"
+                                         data-transitiongoal="{{ q }}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>Not expired ads</p>
+                            <div class="">
+                                <div class="progress progress_sm" style="width: 76%;">
+                                    <div class="progress-bar bg-green" role="progressbar"
+                                         data-transitiongoal="{{ aa }}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
+    <br/>
+
+    <div class="row">
+
+
+        <div class="col-md-4 col-sm-4 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Lates comments <small>not verified comments</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        {% if comments > 0 %}
+                            <ul class="list-unstyled timeline widget">
+                                {% for x in comments|slice:':5' %}
+                                    <li>
+                                        <div class="block">
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                                    <a>{{ x.name }}</a>
+                                                </h2>
+                                                <div class="byline">
+                                                    <span>{{ x.date }}</span>
+                                                </div>
+                                                <p class="excerpt">{{ x.text }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                        {% else %}
+                            <p>There is no comment to verify</p>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 col-sm-4 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>to-do list <small>a tool for remaining works</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div class="" id="reftask">
+                        <ul class="to_do">
+                            {% for x in tasks|slice:':7' %}
+                                <li id="{{ x.id }}">
+                                <p class="pull-right">{{ x.get_status_display }}</p>
+                                    <p>
+                                        <input type="checkbox" class="flat"> {{ x.title }} </p>
+                                    <a href="/panel/taskstatus/{{ x.id }}/"><i class="fa fa-close"></i></a>
+
+                                </li>
+                            {% endfor %}
+                        {% for x in inprogress|slice:':7' %}
+
+                                <li id="{{ x.id }}">
+                                <p class="pull-right">{{ x.get_status_display }}</p>
+                                    <p>
+                                        <input type="checkbox" class="flat"> {{ x.title }} </p>
+                                    <a href="/panel/taskstatus/{{ x.id }}/"><i class="fa fa-close"></i></a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#todoModal"
+                                data-whatever="title">Add
+                        </button>
+
+                        <div class="modal fade" id="todoModal" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="todoModalLabel">New to-do</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">Title:</label>
+                                            <input type="text" class="form-control" id="titletask" name="titletask">
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">close
+                                        </button>
+                                        <button id="sendtask" type="button" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 col-sm-4 ">
+            <div class="x_panel tile fixed_height_320 overflow_hidden">
+                <div class="x_title">
+                    <h2>Top categories</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Settings 1</a>
+                                <a class="dropdown-item" href="#">Settings 2</a>
+                            </div>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    {% if ww.count > 5 %}
+                        <table class="" style="width:100%">
+                            <tr>
+                                <th style="width:37%;">
+                                    <p>Top 5</p>
+                                </th>
+                                <th>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 ">
+                                        <p class="">Device</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 ">
+                                        <p class="">Progress</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+
+                                    <canvas id="countries"></canvas>
+                                </td>
+                                <td>
+                                    <table class="tile_info">
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square blue"></i>{{ ww.0 }} </p>
+                                            </td>
+                                            <td>{{ w.0.posts }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square green"></i>{{ ww.1 }} </p>
+                                            </td>
+                                            <td>{{ w.1.posts }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square purple"></i>{{ ww.2 }} </p>
+                                            </td>
+                                            <td>{{ w.2.posts }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square aero"></i>{{ ww.3 }} </p>
+                                            </td>
+                                            <td>{{ w.3.posts }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p><i class="fa fa-square red"></i>{{ ww.4 }} </p>
+                                            </td>
+                                            <td>{{ w.3.posts }}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    {% else %}
+
+                        <p>The number of categories</P>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+
+        <div class="col-md-8 col-sm-8 ">
+            <div class="row">
+
+
+                <!-- Start to do list -->
+
+                <!-- End to do list -->
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#send").click(function () {
+                $.ajax({
+                    url: '/panel/createtask/',
+                    data: {'flag': '0'},
+                    type: 'post',
+                    cache: false,
+                    success: function updateDiv() {
+                        location.reload();
+
+                    }
+                });
+            });
+        });
+
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#send1").click(function () {
+                $.ajax({
+                    url: '/panel/createtask/',
+                    data: {'flag': '1'},
+                    type: 'post',
+                    cache: false,
+                    success: function updateDiv() {
+                        location.reload();
+
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+    <script>
+        // line chart data
+        var buyerData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            datasets: [
+                {
+                    fillColor: "rgba(26,187,156,0.4)",
+                    strokeColor: "#066f5b",
+                    pointColor: "#fff",
+                    pointStrokeColor: "#9DB86D",
+                    data: {{ dp }}
+                }
+            ]
+        }
+        // get line chart canvas
+        var buyers = document.getElementById('buyers').getContext('2d');
+        // draw line chart
+        new Chart(buyers).Line(buyerData);
+        {% if ww.count > 5 %}
+            var pieData = [
+                {
+                    value: {{ww.0.posts}},
+                    color: "#878BB6"
+                },
+                {
+                    value: {{ww.1.posts}},
+                    color: "#4ACAB4"
+                },
+                {
+                    value: 10,
+                    color: "#FF8153"
+                },
+                {
+                    value: 30,
+                    color: "#FFEA88"
+                }
+            ];
+            // pie chart options
+            var pieOptions = {
+                segmentShowStroke: false,
+                animateScale: true
+            }
+            // get pie chart canvas
+            var countries = document.getElementById("countries").getContext("2d");
+            // draw pie chart
+            new Chart(countries).Pie(pieData, pieOptions);
+        {% endif %}
+    </script>
+    <script>
+
+        $(function () {
+            $("#sendtask").click(function () {
+                $.ajax({
+                    url: '/panel/gettask/',
+                    data: {'title': $("#titletask").val()},
+                    type: 'post',
+                    cache: false,
+                    success: function updateDiv() {
+                        location.reload();
+
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

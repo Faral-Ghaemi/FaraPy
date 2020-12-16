@@ -1,0 +1,21 @@
+{% extends 'panel/basic.html' %}
+{% block content%}
+{% load static %}
+<style>
+  .parent3 {
+  position: relative;
+  }
+
+.child3 {
+  position: absolute;
+  top: 50%;
+  left: 42%;
+  transform: translate(-50%, -50%);
+}
+</style>
+
+<p class=" parent3 child3 revenue-head" style="z-index: 3;font-size:25px;">Access Denied!
+<i class="icon-lock"></i>
+</p>
+
+{% endblock %}

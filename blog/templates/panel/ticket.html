@@ -1,0 +1,78 @@
+{% extends 'panel/basic.html' %}
+{% load static %}
+{% block content %}
+    <div class="ticket-answer-box">
+        <h3><span>#{{ tickets.id }}</span> | {{ tickets.title }} <span>{{ tickets.get_status_display }}</span></h3>
+        <div class="user-ticket-box">
+            <div class="user-ticket-avatar"><img src="{{tickets.user.image.url}}"></div>
+            <div class="user-ticket-describtion">
+            <div class="user-ticket-describtion-area">
+                {{ tickets.description }}
+            </div>
+            </div>
+            <div class="user-ticket-username">{{ tickets.user }}</div>
+            <div class="user-ticket-date">{{ tickets.date }}</div>
+        </div>
+        {% for x in tickets.subtickets_set.all %}
+            {% if x.user %}
+                <div class="user-ticket-box">
+                    <div class="user-ticket-avatar"><img src="{{x.user.image.url}}"></div>
+                    <div class="user-ticket-describtion">
+                    <div class="user-ticket-describtion-area">
+                        {{ x.description }}
+                    </div>
+                    </div>
+                    <div class="user-ticket-username">{{ x.user }}</div>
+                    <div class="user-ticket-date">{{ x.date }}</div>
+                </div>
+            {% else %}
+			
+            <div class="user-ticket-box support-answer">
+                <div class="user-ticket-avatar"><img src="https://faral.tech/media/logo/logo-faral.svg"></div>
+                <div class="user-ticket-describtion">
+                <div class="user-ticket-describtion-area">
+                    {{ x.description }}
+                </div>
+                </div>
+                <div class="user-ticket-username">Support</div>
+                <div class="user-ticket-date">{{ x.date }}</div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        <div class="ticket-answer-input">
+            <form action="/panel/addsubticket/{{ tickets.id }}/" method="post">
+                {% csrf_token %}
+                <textarea name="text" id="text"></textarea>
+               
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $('#table_id1').DataTable({
+                "order": [[3, "desc"]]
+            });
+        });
+
+
+        $(function () {
+            $("#sendtask").click(function () {
+                $.ajax({
+                    url: '/panel/addticket/',
+                    data: {'title': $("#titletask").val(), 'text': $("#text").val()},
+                    type: 'post',
+                    cache: false,
+                    success: function updateDiv() {
+                        location.reload();
+
+                    }
+                });
+            });
+        });
+
+    </script>
+{% endblock %}

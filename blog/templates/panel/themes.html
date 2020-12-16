@@ -1,0 +1,97 @@
+{% extends 'panel/basic.html' %}
+{% load thumbnail %}
+{% load static %}
+{% block title %}Themes{% endblock title %}
+{% block content %}
+   <div class="theme-items">
+      {% for foo in list %}
+		<div class="theme-item">
+			<div class="theme-item-image">
+				<img src="{{foo.theme_pic}}">
+				<div class="theme-structure-cover">
+					<ul>
+					{% if foo.index == 1 %}
+						<li><i class="fy-check"></i>index.html</li>
+					{% else %}
+						<li><i class="fy-remove"></i>index.html</li>
+					{% endif %}
+					{% if foo.category == 1 %}
+						<li><i class="fy-check"></i>category.html</li>
+					{% else %}
+						<li><i class="fy-remove"></i>category.html</li>
+					{% endif %}
+					{% if foo.base == 1 %}
+						<li><i class="fy-check"></i>base.html</li>
+					{% else %}
+						<li><i class="fy-remove"></i>base.html</li>
+					{% endif %}
+					{% if foo.post == 1 %}
+						<li><i class="fy-check"></i>post.html</li>
+					{% else %}
+						<li><i class="fy-remove"></i>post.html</li>
+					{% endif %}
+					{% if foo.page == 1 %}
+						<li><i class="fy-check"></i>page.html</li>
+					{% else %}
+						<li><i class="fy-remove"></i>page.html</li>
+					{% endif %}
+					{% if foo.search == 1 %}
+						<li><i class="fy-check"></i>search.html</li>
+					{% else %}
+						<li><i class="fy-remove"></i>search.html</li>
+					{% endif %}
+
+					</ul>
+				</div>
+			</div>
+			<div class="theme-panel-btns">
+			{% if foo.vrify == 1 %}
+				{% if foo.selected == 'Y' %}
+				<a class="btn btn-success" role="button">Active</a>
+				<a>{{foo.name}}</a>
+				{% else %}
+				<a class="btn btn-primary" href="/panel/selecttheme/?theme={{foo.name}}" role="button">Activation</a>
+				<a class="btn btn-danger" href="/panel/deltheme/?theme={{foo.name}}" role="button">Delete</a>
+				<a>{{foo.name}}</a>
+				{% endif %}
+			{% else %}
+			<p>This Theme is not Verified by FaraPy</p>
+                <a class="btn btn-danger" href="/panel/deltheme/?theme={{foo.name}}" role="button">Delete</a>
+
+			{% endif %}
+			</div>
+		</div>
+		{% endfor %}
+		<div class="theme-item add-theme">
+		<!-- Button trigger modal -->
+		<a data-toggle="modal" data-target="#themeuploadModal">
+		  <i class="fy-plus"></i>
+		</a>
+
+		<!-- Modal -->
+		<div class="modal fade" id="themeuploadModal" tabindex="-1" role="dialog" aria-labelledby="themeuploadModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="themeuploadModalLabel">Add Theme</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+                <form action="" method="post" enctype="multipart/form-data">
+			  <div class="modal-body">
+				<input type="file" accept="zip" name="file">
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Dismiss</button>
+				<button type="submit" class="btn btn-primary">Upload and Save</button>
+			  </div>
+                    </form>
+			</div>
+		  </div>
+		</div>
+			
+		</div>
+   </div>
+
+{% endblock %}

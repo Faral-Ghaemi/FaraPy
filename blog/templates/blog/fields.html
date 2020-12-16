@@ -1,0 +1,170 @@
+
+{% extends "panel/basic.html" %}
+{% load widget_tweaks %}
+{% block content %}
+{% load static %}
+
+
+        <section class="panel box box-success">
+            <header class="panel-heading">
+            Form Fields List {{form.title}}
+            <div class="clear">
+
+
+            <a href="#myModal-1" data-toggle="modal" class="btn btn-xs btn-success">
+                                        Add Field
+                                    </a> <a href="#myModal-2" data-toggle="modal" class="btn btn-xs btn-info">
+                                        Add text Field
+                                        </a></div>
+            </header> <legend> </legend>
+            <div class="col-lg-12 form-fields" id="ref">
+
+
+                  <h3 class="card-title">Form preview</h3>
+
+                <!-- /.card-header -->
+                <!-- form start -->
+                <div class="panel-body">
+                <form role="form" class="form-horizontal">
+                  <div class="card-body">
+                    {% for g in form.field_set.all %}
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">{{g.title}}</label><a href="/panel/df/{{g.id}}/" class="pull-left btn btn-danger btn-xs"><i class="fa fa-trash"></i> </a>
+                      <input type="{{g.type}}" class="form-control" id="exampleInputEmail1" placeholder="">
+                    </div>
+                    {% endfor %}
+                    {% for g in form.textfield_set.all %}
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">{{g.title}}</label><a href="/panel/dttf/{{g.id}}/" class="pull-left btn btn-danger btn-xs"><i class="fa fa-trash"></i> </a>
+                      <textarea class="form-control" rows="3" placeholder="Enter informations..."></textarea>
+                    </div>
+                      {% endfor %}
+
+                  </div>
+                  <!-- /.card-body -->
+
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                  </div>
+                </form>
+   
+           </div>
+        </section>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-1" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                            <h4 class="modal-title">Add Field</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-horizontal" >
+                              {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="inputEmail1" class="col-lg-3 control-label">Field Name</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" Name='title' class="form-control" id="title" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword1" class="col-lg-3 control-label">Field Type</label>
+                                    <div class="col-lg-9">
+
+                                <select class="form-control select2" style="width: 100%;" Name="type" id='type'>
+
+
+                                  <option value="text">Text</option>
+                                  <option value="email">Email</option>
+                                  <option value="password">Password</option>
+                                  <option value="number">Number</option>
+
+                                </select>
+                            </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-offset-3 col-lg-9">
+                                        <button  id="send" type="submit" class="btn btn-info">Create Field</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal-2" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                            <h4 class="modal-title">Add Text Field</h4>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="form-horizontal" >
+                              {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="inputEmail1" class="col-lg-3 control-label">Field Name</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" Name='titlet' class="form-control" id="titlet" placeholder="">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-lg-offset-3 col-lg-9">
+                                        <button id="sendt" type="submit" class="btn btn-info">Create Field</button>
+                                    </div>
+                                </div>
+                    </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+<!-- page end-->
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+$(function () {
+  $("#send").click(function () {
+      $.ajax({
+         url: '/panel/addfield/{{form.id}}/',
+         data: { 'title': $("#title").val() ,'type': $("#type").val() },
+         type: 'post',
+         cache: false,
+         success: function updateDiv()
+{
+$( "#ref" ).load(window.location.href + " #ref" );
+ document.getElementById('title').value = "";
+}
+      });
+  });
+});
+
+
+$(function () {
+  $("#sendt").click(function () {
+      $.ajax({
+         url: '/panel/addfieldt/{{form.id}}/',
+         data: { 'titlet': $("#titlet").val() },
+         type: 'post',
+         cache: false,
+         success: function updateDiv()
+{
+$( "#ref" ).load(window.location.href + " #ref" );
+ document.getElementById('titlet').value = "";
+}
+      });
+  });
+});
+</script>
+
+<script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+{% endblock %}

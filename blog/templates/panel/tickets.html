@@ -1,0 +1,150 @@
+{% extends 'panel/basic.html' %}
+{% block content %}
+    {% load static %}
+
+    <!--main content start-->
+
+    <!-- page start-->
+
+    <div class="row" id='reff' style="display: block;">
+
+        <div class="col-lg-12">
+            <section class="panel box box-success">
+                <header class="panel-heading">
+                    <p>
+                    <h1 align="center">Tickets</h1><br>
+                    </p>
+                    {{ msg }}
+                </header>
+
+
+                <legend></legend>
+
+
+                <table id="table_id1" class="table table-striped border-top" id="sample_1" style="width: 100% !important;">
+                    <thead>
+
+                    <tr>
+
+                        <td><i class="fa fa-circle"></i>&nbsp
+                            Subject
+                        </td>
+                        <td><i class="fa fa-grip-lines"></i>&nbsp
+                            Description
+                        </td>
+                        <td><i class="fa fa-calendar-check"></i>&nbsp
+                            Date
+                        </td>
+
+                        <td><i class="fa fa-check"></i>&nbsp
+                            <span>Status</span>
+                        </td>
+
+                        <td>
+                            <a href="#todoModal" data-toggle="modal" class="btn btn-success btn-xs">Add</a>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for u in tickets %}
+                        <tr>
+
+                            <td>
+                                {{ u.title }}
+                            </td>
+                            <td>
+                                {{ u.description|slice:':150' }}
+                            </td>
+                            <td>
+                                {{ u.date }}
+                            </td>
+                            <td>
+                                {{ u.get_status_display }}
+                            </td>
+
+
+                            <td>
+                                {% if u.status != 0 %}
+                                    <a href="/panel/closeticket/{{ u.id }}/">
+                                        <button class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Close Ticket
+                                        </button>
+                                    </a>
+                                {% endif %}
+                                <a href="/panel/TicketDelete/{{ u.pk }}/">
+                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash "></i> Delete
+                                    </button>
+                                </a>
+                                <a href="/panel/ticket/{{ u.pk }}/">
+                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Answers</button>
+                                </a>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- page end-->
+    </section>
+
+    <div class="modal fade" id="todoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="todoModalLabel">New to-do</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="titletask" name="titletask">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="text" name="text"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+                    <button id="sendtask" type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $('#table_id1').DataTable({
+                "order": [[3, "desc"]]
+            });
+        });
+
+
+        $(function () {
+            $("#sendtask").click(function () {
+                $.ajax({
+                    url: '/panel/addticket/',
+                    data: {'title': $("#titletask").val(), 'text': $("#text").val()},
+                    type: 'post',
+                    cache: false,
+                    success: function updateDiv() {
+                        location.reload();
+
+                    }
+                });
+            });
+        });
+
+    </script>
+{% endblock %}
+

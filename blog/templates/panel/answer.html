@@ -1,0 +1,61 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %}لیست پاسخ ها{% endblock title %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+
+                            Form answers list {{a.form.title}}
+
+                          </header> <legend> </legend>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                              <th><i class="fa fa-list-alt"></i>Title </th>
+                              <th><i class="fa fa-list-alt"></i>Value</th>
+
+
+
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in a.answerfield_set.all %}
+
+                          <tr class="odd gradeX">
+                              <td><input type="checkbox" class="checkboxes" value="1" /></td>
+
+                              <td>{{g.field.title}}</td>
+
+                              <td>{{g.title}}</td>
+
+
+                          </tr>
+                          {% endfor %}
+                          {% for g in a.answertextfield_set.all %}
+
+                          <tr class="odd gradeX">
+                            <td><input type="checkbox" class="checkboxes" value="1" /></td>
+
+                            <td>{{g.field.title}}</td>
+
+                            <td>{{g.title}}</td>
+
+
+                          </tr>
+                          {% endfor %}
+                          </tbody>
+                          </table>
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}

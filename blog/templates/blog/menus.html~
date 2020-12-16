@@ -1,0 +1,36 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %} Menus list {% endblock title %}
+{% block content %}
+
+
+
+              <!-- page start-->
+              <div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                            Menus list
+                            </p>
+
+                          </header> <legend> </legend>
+
+
+
+
+
+
+
+
+              </div>
+                </div>
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}
+    {% block js %}
+
+
+{% endblock %}

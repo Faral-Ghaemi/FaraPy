@@ -1,0 +1,162 @@
+{% load farapy %}{% load thumbnail %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{setting.persian_title}} - {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/icons.css">
+        <link rel="stylesheet" href="/css/template.css">
+        <link rel="stylesheet" href="/css/owl.carousel.min.css">
+        <script src="/js/jquery-3.5.1.min.js"></script>
+        <script src="/js/owl.carousel.min.js"></script>
+        <script src="/js/owl.settings.js"></script>
+        <script src="/js/flashblue-plugins.js"></script>
+        <script src="/js/sliding-tabs.js"></script>
+        <script src="/js/sliding-tabs-touch.js"></script>
+        <script src="/js/sliding-tabs-settings.js"></script>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            {% get_menu 'side menu' as sideMenu %}
+            {% for x in sideMenu %}
+            <a href="{% menu_url x %}">{{ x.title|safe }}</a>
+            {% endfor %}
+        </div>
+    </head>
+    <body>
+        <div id="main">
+            <div class="post-thumb-box">
+                    <img src="/img/slide-2.jpg">
+                <div class="menu-box over">
+                    <ul class="social-icons left">
+                        <li><a href="{{setting.linkedin}}"><i class="icon-social-linkedin"></i> </a> </li>
+                        <li><a href="{{setting.github}}"><i class="icon-social-github"></i> </a> </li>
+                    </ul>
+                    <ul>
+                        <li><a href="#" onclick="openNav()"><i class="icon-list-bullet"></i></a></li>
+                        <li><a href="/"><i class="icon-home"></i></a></li>
+                        {% get_menu 'Main Menu' as mainMenu %}
+                        {% for x in mainMenu %}
+                        <li><a href="{% menu_url x %}">{{ x.title }}</a></li>
+                        {% endfor %}
+                        <li class="right relative"><a href="#"><i class="icon-magnifying-glass"></i> </a></li>
+                    </ul>
+                </div>
+                <div class="post-title"><h1>{{p.title}}</h1></div>
+            </div>
+            <div class="wrap box">
+                <div class="bread-crumb">
+                    <i class="icon-home"></i> » <span>{{p.title}}</span>
+                </div>
+                <div class="content-box">
+                    {{p.content|safe}}
+                </div>
+                <div class="post-comment-section">
+                    	{% if p.form %}
+                    <div class="latest-projects">
+                        <h3>{{p.form.title}}</h3>
+                        <form class="post-comment" method="post" action="/getanswer/{{p.form.id}}/">{% csrf_token %}
+                          {% for g in p.form.field_set.all %}
+                            <input type="{{g.type}}"  name="{{g.id}}" placeholder="{{g.title}}">
+                          {% endfor %}
+                            {% for g in p.form.textfield_set.all %}
+                            <textarea  name="{{g.id}}" placeholder="{{g.title}}"></textarea>
+                            {% endfor %}
+                            <button type="submit" onclick="sMessage()">Send</button>
+                            <div class="comment-message" id="message-show">
+                                <p>The form has been sent successfuly</p>
+                            </div>
+                            <script>
+                                function sMessage() {
+                                    var x = document.getElementById("message-show");
+                                    if (x.style.display === "inline-block") {
+                                        x.style.display = "none";
+                                    } else {
+                                        x.style.display = "inline-block";
+                                    }
+                                }
+                            </script>
+                        </form>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="post-comment-section">
+                    {% if p.com %}
+                    <div class="latest-projects">
+                        <h3>Write a Comments</h3>
+                        <div class="post-comment">
+                            <input type="text" id="name" placeholder="Name">
+                            <input type="email" id="email" placeholder="Email">
+                            <textarea id="text" placeholder="Message"></textarea>
+                            <button id="send" type="submit" onclick="sMessage()">Submit </button>
+                            <div class="comment-message"  id="message-show">
+                                <p>Your message has been sent successfuly</p>
+                            </div>
+                            <script>
+                                function sMessage() {
+                                    var x = document.getElementById("message-show");
+                                    if (x.style.display === "inline-block") {
+                                        x.style.display = "none";
+                                    } else {
+                                        x.style.display = "inline-block";
+                                    }
+                                }
+                            </script>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="post-comment-section">
+                    <div class="latest-projects">
+                        <h3>Commnets ({{com.count}})</h3>
+                        <ul class="press-user-comments" id='ref'>
+                        {% for x in com %}
+                        <li>
+                          <div class="user-comment-details over">{% if port == 1 %}<a href="/dc/{{x.id}}/"><i class="icon-remove"></i> Remove</a>{% endif %}
+                            <div class="user-comment-name left">{{x.name}}</div>
+                            <div class="user-comment-date right">{{x.date}}</div>
+                          </div>
+                          <div class="user-comment-matn">{{x.text}}</div>
+                      </li>
+
+                        {% endfor %}
+                        <ul>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+                <footer>
+                    <div class="cpr">Copyright © FaraPy 2020 - Powered by <a href="https://faral.tech">Faral co.</a></div>
+                </footer>
+            </div>
+        </div>
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+            }
+        </script>
+        <script type="text/javascript">
+        $(function () {
+            $("#send").click(function () {
+                $.ajax({
+                   url: '/getcom/{{p.id}}/',
+                   data: { 'name': $("#name").val() , 'email': $("#email").val() , 'text': $("#text").val() },
+                   type: 'post',
+                   cache: false,
+                   success: function updateDiv()
+        {
+           $( "#ref" ).load(window.location.href + " #ref" );
+           document.getElementById('name').value = "";
+           document.getElementById('text').value = "";
+           document.getElementById('email').value = "";
+        }
+                });
+            });
+        });
+        </script>
+    </body>
+</html>

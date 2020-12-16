@@ -1,0 +1,87 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %}لیست منو ها{% endblock title %}
+{% block content %}
+
+
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                            Menus list
+                            </p>
+
+                          </header> <legend> </legend>
+                          <form class="form-horizontal tasi-form" action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Name:</label>
+                                <div class="col-sm-6 ">
+                                  <input type="text" name="title" class="form-control">
+                                          </div>
+                            </div>
+                          <div class="form-group">
+                              <label for="inputPassword1" class="col-lg-2 control-label"> Menu type:</label>
+                              <div class="col-sm-6">
+
+                          <select class="form-control select2" style="width: 100%;" id='status' name="status" id='type'>
+
+
+                            <option value="0">Primary menu</option>
+                            <option value="1">Secondary menu</option>
+
+
+                          </select>
+                      </div><button type="submit" class="btn btn-success">Send</button>
+                          </div>
+
+
+
+                          </form>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+                            <th><i class="fa fa-envelope-open-text"></i> Name </th>
+                              <th><i class="fa fa-envelope-open-text"></i> Status </th>
+
+
+                                <th></th>
+
+
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in m %}
+
+                          <tr class="odd gradeX">
+
+                            <td>{{g.title}}</td>
+                              <td>{{g.get_status_display}}</td>
+                              <td>
+                                <a href="/panel/menus/{{g.id}}/"><button class="btn btn-success btn-xs"><i class="far fa-file-alt"></i> Setting </button></a>
+                                <a href="/panel/MenuUpdate/{{g.pk}}/"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit </button></a>
+                                <a href="/panel/MenuDelete/{{g.pk}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete </button></a>
+
+
+                              </td>
+
+                          </tr>
+                          {% endfor %}
+
+                          </tbody>
+                          </table>
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}
+    {% block js %}
+
+
+{% endblock %}

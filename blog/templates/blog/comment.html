@@ -1,0 +1,65 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %} Comments List {% endblock title %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                        Comments List
+                          </p>
+
+                          </header> <legend> </legend>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                              <th><i class="fa fa-circle"></i>&nbspName</th>
+                              <th><i class="fa fa-envelope"></i>&nbsp Email</th>
+                              <th class="hidden-phone"><i class="fa fa-quote-right"></i>&nbspExplanation</th>
+
+                              <th class="hidden-phone"><i class="fa fa-list-alt"></i>&nbsp Post</th>
+                              <th class="hidden-phone"><i class="fa fa-calendar"></i>&nbsp Date</th>
+                              <th class="hidden-phone"><i class="fa fa-check"></i>&nbsp Status</th>
+
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in comment %}
+
+                          <tr class="odd gradeX">
+                              <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                              <td>{{g.name}}</td>
+                              <td>{{g.email}}</td>
+                              <td class="hidden-phone">{{g.text}}</td>
+
+                              <td>{{g.post}}</td>
+                              <td>{{g.date}}</td>
+                              <td class="hidden-phone">{{g.get_status_display}}</td>
+
+                              <td>
+                                {% if g.status == 0 %}
+                                <a href="/panel/req/{{g.id}}/"><button class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Confirm</button>
+                                  {%else%}
+
+                                    {%endif%}
+                                <a href="/panel/commentDelete/{{g.pk}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
+                              </td>
+
+                          </tr>
+                          {% endfor %}
+
+                          </tbody>
+                          </table>
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}

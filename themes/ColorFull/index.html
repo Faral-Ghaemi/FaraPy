@@ -1,0 +1,222 @@
+{% load farapy %}
+{% load thumbnail %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{setting.title}} - {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/icons.css">
+        <link rel="stylesheet" href="/css/template.css">
+        <link rel="stylesheet" href="/css/owl.carousel.min.css">
+        <script src="/js/jquery-3.5.1.min.js"></script>
+        <script src="/js/owl.carousel.min.js"></script>
+        <script src="/js/owl.settings.js"></script>
+        <script src="/js/flashblue-plugins.js"></script>
+        <script src="/js/sliding-tabs.js"></script>
+        <script src="/js/sliding-tabs-touch.js"></script>
+        <script src="/js/sliding-tabs-settings.js"></script>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            {% get_menu 'side menu' as sideMenu %}
+            {% for x in sideMenu %}
+            <a href="{% menu_url x %}">{{ x.title|safe }}</a>
+            {% endfor %}
+        </div>
+    </head>
+    <body>
+        <div id="main">
+            <div class="silder-box">
+                <section id="home-slider">
+                    <div class="owl-carousel">
+                        {% get_sliders as homeSlider %}
+                        {% for x in homeSlider %}
+                        <div class="slide">
+                            <img src="{{ x.image.url }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                <div class="menu-box">
+                    <ul class="social-icons left">
+                        <li><a href="{{setting.linkedin}}"><i class="icon-social-linkedin"></i> </a> </li>
+                        <li><a href="{{setting.github}}"><i class="icon-social-github"></i> </a> </li>
+                    </ul>
+                    <ul>
+                        <li><a href="#" onclick="openNav()"><i class="icon-list-bullet"></i></a></li>
+                        <li><a href="/"><i class="icon-home"></i></a></li>
+                        {% get_menu 'Main Menu' as mainMenu %}
+                        {% for x in mainMenu %}
+                        <li><a href="{% menu_url x %}">{{ x.title }}</a></li>
+                        {% endfor %}
+                        <li class="right relative search-btn"><a href="#"><i class="icon-magnifying-glass"></i> </a><form method="post" class="search-form" action="/search/">{% csrf_token %}<input type="search" placeholder="Search..." name="s" id="s"></form></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="wrap box">
+                <div class="box-items">
+                    {% for x in categories %}
+                    <a href="/category/{{x.id}}/" class="doc-item gradient-border">
+                        <i class="icon-thumbnails"></i>
+                        <h2>{{x.title}}</h2>
+                    </a>
+                    {% endfor %}
+                    
+                </div>
+                <div class="latest-projects">
+                    <h3>Latest Projects</h3>
+                    <section id="latest-projects">
+                        <div class="owl-carousel">
+                        {% get_category_posts 'default-category' 7 as latestProjects %}
+                        {% for x in latestProjects %}
+                            <a class="slide" href="{{x.url}}" alt="{{x.title}}">
+                            {% thumbnail x.image "269x132" crop="center" as im %}
+                                <img src="{{ im.url }}">
+                            {% endthumbnail %}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+                <div class="sliding-tabs-box">
+                        <div id="slidingtabs" class="separated_3 separated_3-horizontal sliding-tabs">
+                            <div class="st_tabs">
+                                <a href="#prev" id="st_ext_prev" class="btn_gray sliding-tabs-btn-left"><i class="icon-left"></i></a>
+                                <a href="#next" id="st_ext_next" class="btn_gray sliding-tabs-btn-right"><i class="icon-right"></i></a>
+                                <div class="st_tabs_wrap" style="overflow: hidden;">
+                                    <ul class="st_tabs_ul">
+                                        <li class="st_li_first st_li_active"><a href="#tab-1" rel="tab-1" class="st_tab st_tab_1 st_tab_first st_tab_active">Dashboard</a></li>
+                                        <li><a href="#tab-2" rel="tab-2" class="st_tab st_tab_2">Theme Editor</a></li>
+                                        <li><a href="#tab-3" rel="tab-3" class="st_tab st_tab_3">Menu Builder</a></li>
+                                        <li><a href="#tab-4" rel="tab-4" class="st_tab st_tab_4">Affilate System</a></li>
+                                        <li class="st_li_last"><a href="#tab-5" rel="tab-5" class="st_tab st_tab_5 st_tab_last">Clock Plugin</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="st_views" style="height: 118px;">
+                                <div class="tab-1 st_view st_view_first st_view_active" style="position: absolute;">
+                                    <div class="st_view_inner">
+                                        <div class="sliding-shot"><img src="img/shot-1.jpg"> </div>
+                                        <div class="sliding-info">
+                                            <h2>A Light Color Pannel</h2>
+                                            <p>
+                                                The dashboard is included some graphs such as:
+                                                <br>
+                                                - Top Categories
+                                                <br>
+                                                - Cock-in
+                                                <br>
+                                                - To-Do List
+                                                <br>
+                                                - Domain Expiration
+                                                <br>
+                                                - Graph of Posts and etc
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-2 st_view" style="position: absolute; left: 2560px;">
+                                    <div class="st_view_inner">
+                                        <div class="sliding-shot"><img src="img/shot-1.jpg"> </div>
+                                        <div class="sliding-info">
+                                            <h2>A Light Color Pannel</h2>
+                                            <p>
+                                                The dashboard is included some graphs such as:
+                                                <br>
+                                                - Top Categories
+                                                <br>
+                                                - Cock-in
+                                                <br>
+                                                - To-Do List
+                                                <br>
+                                                - Domain Expiration
+                                                <br>
+                                                - Graph of Posts and etc
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-3 st_view" style="position: absolute; left: 2560px;">
+                                    <div class="st_view_inner">
+                                        <div class="sliding-shot"><img src="img/shot-1.jpg"> </div>
+                                        <div class="sliding-info">
+                                            <h2>A Light Color Pannel</h2>
+                                            <p>
+                                                The dashboard is included some graphs such as:
+                                                <br>
+                                                - Top Categories
+                                                <br>
+                                                - Cock-in
+                                                <br>
+                                                - To-Do List
+                                                <br>
+                                                - Domain Expiration
+                                                <br>
+                                                - Graph of Posts and etc
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-4 st_view" style="position: absolute; left: 2560px;">
+                                    <div class="st_view_inner">
+                                        <div class="sliding-shot"><img src="img/shot-1.jpg"> </div>
+                                        <div class="sliding-info">
+                                            <h2>A Light Color Pannel</h2>
+                                            <p>
+                                                The dashboard is included some graphs such as:
+                                                <br>
+                                                - Top Categories
+                                                <br>
+                                                - Cock-in
+                                                <br>
+                                                - To-Do List
+                                                <br>
+                                                - Domain Expiration
+                                                <br>
+                                                - Graph of Posts and etc
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-5 st_view" style="position: absolute; left: 2560px;">
+                                    <div class="st_view_inner">
+                                        <div class="sliding-shot"><img src="img/shot-1.jpg"> </div>
+                                        <div class="sliding-info">
+                                            <h2>A Light Color Pannel</h2>
+                                            <p>
+                                                The dashboard is included some graphs such as:
+                                                <br>
+                                                - Top Categories
+                                                <br>
+                                                - Cock-in
+                                                <br>
+                                                - To-Do List
+                                                <br>
+                                                - Domain Expiration
+                                                <br>
+                                                - Graph of Posts and etc
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="clear"></div>
+                <footer>
+                    <div class="cpr">Copyright © FaraPy 2020 - Powered by <a href="https://faral.tech">Faral co.</a></div>
+                </footer>
+            </div>
+        </div>
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,174 @@
+{% extends 'panel/basic.html' %}
+{% block content %}
+    {% load static %}
+
+    <!--main content start-->
+
+    <!-- page start-->
+    <style type="text/css">
+        #table_id {
+        }
+    </style>
+    <div class="row clear">
+        {% if flag == 0 %}
+            <div class="col-lg-4 task-box" style="margin: 25px; background-color:#F06C71; height:150px; ">
+                <p style="margin:24px;color:#fff;">You started working at {{ induty.in_time }}</p>
+                <button class="btn btn-light " style="margin:24px;;margin-top:-0px;" id='send'><i
+                        class="fa fa-sign-out"></i> Clock-out
+                </button>
+            </div>
+        {% else %}
+            <div class="col-lg-4 task-box" style="margin: 25px ;background-color:#20C5CB; height:150px;">
+                <i class="fa fa-clock-o" style='width:25px;'></i>
+                <p style="margin:24px;color:#fff;">Click to get Started</p>
+                <button class="btn btn-light " style="margin:24px;;margin-top:-0px;" id='send1'><i
+                        class="fa fa-sign-out"></i> Clock-in
+                </button>
+            </div>
+
+        {% endif %}
+        <div class="col-lg-7">
+            <canvas id="buyers"></canvas>
+
+        </div>
+
+    </div>
+    <div class="row" id='reff'>
+
+        <div class="col-lg-12">
+            <section class="panel box box-success">
+                <header class="panel-heading">
+                    <p>
+                    <h1 align="center">Time Cards</h1><br>
+                    </p>
+                    {{ msg }}
+                </header>
+
+
+                <legend></legend>
+
+                <div id='ref1'>
+                    <table id="table_id" class="table table-striped border-top">
+                        <thead>
+
+                        <tr>
+
+                            <td><i class="far fa-circle"></i>&nbsp
+                                User
+                            </td>
+                            <td><i class="fa fa-grip-lines"></i>&nbsp
+                                Sign-in Date
+                            </td>
+                            <td><i class="fa fa-calendar-check"></i>&nbsp
+                                Sign-out Dater
+                            </td>
+
+
+                            <td><i class="fa fa-check-double"></i>&nbsp
+                                <span>Status</span>
+                            </td>
+                            <td>Duration</td>
+                            <td><a href="/panel/TimeCreate/">
+                                <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Add</button>
+                            </a></td>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for u in time_cards %}
+                            <tr>
+                                <td>{{ u.portable }}</td>
+                                <td>
+                                    {{ u.in_date }} - {{ u.in_time }}
+                                </td>
+                                <td>
+                                    {{ u.out_date }} - {{ u.out_time }}
+                                </td>
+
+                                <td>
+                                    {{ u.get_status_display }}
+                                </td>
+                                <td>{% if u.status == 1 %}{{ u.time }}{% endif %}</td>
+                                <td>
+                                    <a href="/panel/TimeUpdate/{{ u.pk }}/">
+                                        <button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                                    </a>
+                                    <a href="/panel/TimeDelete/{{ u.pk }}/">
+                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete
+                                        </button>
+                                    </a>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+        </div>
+    </div>
+
+    <!-- page end-->
+    </section>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+        $(function () {
+            $("#send").click(function () {
+                $.ajax({
+                    url: '/panel/createtask/',
+                    data: {'flag': '0'},
+                    type: 'post',
+                    cache: false,
+                    success: function updateDiv() {
+                        location.reload();
+
+                    }
+                });
+            });
+        });
+
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#send1").click(function () {
+                $.ajax({
+                    url: '/panel/createtask/',
+                    data: {'flag': '1'},
+                    type: 'post',
+                    cache: false,
+                    success: function updateDiv() {
+                        location.reload();
+
+                    }
+                });
+            });
+        });
+
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+
+    <script>
+        // line chart data
+        var buyerData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            datasets: [
+                {
+                    fillColor: "rgba(26,187,156,0.4)",
+                    strokeColor: "#066f5b",
+                    pointColor: "#fff",
+                    pointStrokeColor: "#9DB86D",
+                    data: ['{{dp.0}}', '{{dp.1}}', '{{dp.2}}', '{{dp.3}}', '{{dp.4}}', '{{dp.5}}', '{{dp.6}}', '{{dp.7}}', '{{dp.8}}', '{{dp.9}}', '{{dp.10}}', '{{dp.11}}'],
+                }
+            ]
+        }
+        // get line chart canvas
+        var buyers = document.getElementById('buyers').getContext('2d');
+        // draw line chart
+        new Chart(buyers).Line(buyerData);
+    </script>
+
+{% endblock %}

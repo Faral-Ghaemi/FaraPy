@@ -1,0 +1,43 @@
+{% load farapy %}
+{% for foo in folders %}
+
+    <li class="over fara-directory">
+        <button id="btn_toggle-{% cslash foo %}" class="opentree-btn" onClick="reply_click(this.id)"><i
+                id="btn_toggle-{% cslash foo %}-data"
+                class="fy-002-folder"></i>
+        </button>
+        <a href="?folder={{ foo }}">{% filename foo %}</a>
+        <a href="/panel/delfolder/?file={{ foo }}" class="btn btn-danger btn-sm pull-right"><i
+                class="fa fa-trash" aria-hidden="true"></i></a>
+
+        <ul id="btn_toggle-{% cslash foo %}s" class="close-file">{% subdirs foo %}</ul>
+    </li>
+    <div class="clear"></div>
+
+
+
+
+
+
+
+{% endfor %}
+{% for foo in subdir %}
+    {% if s == foo %}
+        <li class="over fara-sub-directory file-list-active"><a href="?file={{ foo }}&folder={% backfolder foo %}">
+            {% suffix foo %}{% filename foo %}</a>
+            <a href="/panel/delfile/?file={{ foo }}&folder={% backfolder foo %}"
+               class="btn btn-danger btn-sm pull-right"><i
+                    class="fa fa-trash" aria-hidden="true"></i></a>
+        </li>
+    {% else %}
+        <li class="over fara-sub-directory"><a href="?file={{ foo }}&folder={% backfolder foo %}">
+            {% suffix foo %}{% filename foo %}</a>
+            <a href="/panel/delfile/?file={{ foo }}&folder={% backfolder foo %}"
+               class="btn btn-danger btn-sm pull-right"><i
+                    class="fa fa-trash" aria-hidden="true"></i></a>
+        </li>
+    {% endif %}
+
+
+
+{% endfor %}

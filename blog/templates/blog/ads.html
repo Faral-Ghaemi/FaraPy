@@ -1,0 +1,59 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %}اضافه کردن{% endblock title %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                        Ads list
+                        </p>
+
+                          </header> <legend> </legend>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                                <th class="hidden-phone"><i class="far fa-circle"></i>&nbspTitle</th>
+                              <th><i class="far fa-image"></i>&nbspImage</th>
+                              <th><i class="fas fa-paperclip"></i>&nbspUrl</th>
+                              <th class="hidden-phone"><i class="fa fa-calendar-check"></i>&nbspCreate date</th>
+                              <th class="hidden-phone"><i class="fa fa-calendar-times"></i>&nbspExpiration Ads date</th>
+
+                              <th>  <a href="/panel/padsCreate/"><button class="btn btn-success btn-xs"><i class="fa fa-plus"></i>Add</button></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in ads %}
+
+                          <tr class="odd gradeX">
+                              <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                              <td class="hidden-phone"><a href="/panel/padsUpdate/{{g.id}}/">{{g.title}}</a></td>
+                              <td>{{g.image}}</td>
+                              <td>{{g.url}}</td>
+                              <td class="hidden-phone">{{g.date}}</td>
+                              <td class="hidden-phone">{{g.EXdate}}</td>
+
+                              <td>
+                                <a href="/panel/padsUpdate/{{g.pk}}/"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                                <a href="/panel/padsDelete/{{g.pk}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</button>
+                              </td>
+
+                          </tr>
+                          {% endfor %}
+
+                        </tbody>
+                        </table>
+
+                      </section>
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}

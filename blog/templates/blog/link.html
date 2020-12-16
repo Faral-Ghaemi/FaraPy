@@ -1,0 +1,52 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %}Links List{% endblock title %}
+{% load widget_tweaks %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                       Links List
+                        </p>
+
+                          </header> <legend> </legend>
+
+                          <table id="table_id" class="table table-striped border-top" id="sample_1">
+                          <thead>
+
+                          <tr>
+
+                              <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" /></th>
+                              <th><i class="fa fa-circle"></i>&nbspTitle</th>
+                              <th><i class="fa fa-link"></i>&nbspUrl</th>
+                              <th>  <a href="/panel/plinkCreate/"><button class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Add </button></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            {% for g in link %}
+
+                          <tr class="odd gradeX">
+                              <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                              <td><a href="/panel/plinkUpdate/{{g.id}}/">{{g.title}}</a></td>
+                              <td>{{g.url}}</td>
+                              <td>
+                                <a href="/panel/plinkUpdate/{{g.pk}}/"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit </button>
+                                <a href="/panel/plinkDelete/{{g.pk}}/"><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete </button>
+                              </td>
+
+                          </tr>
+                          {% endfor %}
+
+                          </tbody>
+                          </table>
+                      </section>
+
+
+              <!-- page end-->
+
+    <script type="text/javascript" src="{% static 'js/dynamic-table.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/data-tables/DT_bootstrap.js' %}"></script>
+    {% endblock %}

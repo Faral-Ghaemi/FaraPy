@@ -1,0 +1,224 @@
+{% extends 'panel/basic.html' %} {% load thumbnail %} {% load static %}
+{% block title %} Menus List {% endblock title %}
+{% block content %}
+
+              <!-- page start-->
+
+                      <section class="panel box box-success">
+                          <header class="panel-heading">
+                            <p align="center">
+                            Menus List
+                            </p>
+
+                          </header> <legend> </legend>
+						  </section>
+
+                        <div class="container-fluid">
+                            <div class="row">
+                              <div class="col-md-4">
+								<div id="accordion">
+								  <div class="card">
+									<div class="card-header" id="headingOne">
+									  <h5 class="mb-0">
+										<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										  Add Category
+										</button>
+									  </h5>
+									</div>
+
+									<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+									  <div class="card-body">
+                                            <select id="select-category" placeholder="Select/Search Category">
+
+                                              {% for x in categories %}
+                                              <option value="{{x.id}}">{{x.title}}</option>
+                                              {% for y in x.category.all %}
+                                              <option value="{{y.id}}"> ↲ {{y.title}}</option>
+                                              {% endfor %}
+                                              {% endfor %}
+
+                                            </select>
+                                            <select id="select-menu" placeholder="Select/Search Mother Menu" id='ref1'>
+                                              <option value=""> Select if it has a Mother Menu </option>
+                                              {% for x in m.submenu_set.all %}
+                                              <option value="{{x.id}}">{{x.title}}</option>
+
+                                              {% endfor %}
+
+                                            </select>
+                                            <button id="sendcat" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Add </button>
+									  </div>
+									</div>
+								  </div>
+								  <div class="card">
+									<div class="card-header" id="headingTwo">
+									  <h5 class="mb-0">
+										<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+										  Add Link
+										</button>
+									  </h5>
+									</div>
+									<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+									  <div class="card-body">
+                                            <input type="text" id="title1" class="menu-form-link" placeholder="Link Title">
+                                            <input type="url" id="url1" class="menu-form-field" placeholder="https://example.com">
+
+                                            <select id="select-menu1" placeholder="Select/Search Mother Menu" id='ref1'>
+                                              <option value=""> Select if it has a Mother Menu </option>
+                                              {% for x in m.submenu_set.all %}
+                                              <option value="{{x.id}}">{{x.title}}</option>
+
+                                              {% endfor %}
+
+                                            </select>
+                                            <button id="sendlink" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Add </button>
+									  </div>
+									</div>
+								  </div>
+								  <div class="card">
+									<div class="card-header" id="headingThree">
+									  <h5 class="mb-0">
+										<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+										  Add Page
+										</button>
+									  </h5>
+									</div>
+									<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+									  <div class="card-body">
+                                            <select id="select-page" placeholder="Select/Search page">
+                                              <option value=""> Select/Search Page </option>
+                                              {% for x in pages %}
+                                              <option value="{{x.id}}">{{x.title}}</option>
+
+                                              {% endfor %}
+
+                                            </select>
+                                            <select id="select-menu2" placeholder="Select/Search Mother Menu" id='ref1'>
+                                              <option value=""> Select if it has a Mother Menu </option>
+                                              {% for x in m.submenu_set.all %}
+                                              <option value="{{x.id}}">{{x.title}}</option>
+
+                                              {% endfor %}
+
+                                            </select>
+                                            <button id="sendpage" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Add </button>
+									  </div>
+									</div>
+								  </div>
+								</div>
+								
+                              </div>
+                                <div class="col-md-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading clearfix"><h5 class="pull-left">List {{m.title}}</h5>
+
+                                        </div>
+                                        <div class="panel-body" id="ref">
+                                          {% for x in mom %}<div class="menu-root-item">{{x.title}} <a class="rmv-btn pull-right" href="/panel/dlmenu/{{x.id}}/"> <i class="fa fa-trash" aria-hidden="true"></i> </a></div>
+                                          {% for y in x.menuu.all %}
+                                          <div class="menu-root-item" style="margin-left: 25px;">{{y.title}} <a class="rmv-btn pull-right" href="/panel/dlmenu/{{y.id}}/"> <i class="fa fa-trash" aria-hidden="true"></i> </a></div>
+                                          {% endfor %}
+                                          {% endfor %}
+                                            <ul id="menu" class="sortableLists list-group">
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+              <!-- page end-->
+
+
+    {% endblock %}
+    {% block js %}
+
+
+<script type="text/javascript">
+  $('.accord1 li p').click(function(){
+$(this).next(".accord-content").slideToggle();
+$(this).closest("li").siblings().find('.accord-content').slideUp();
+});
+</script>
+
+<script>
+  var acc = document.getElementsByClassName("sa-accordion");
+  var i;
+
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      this.classList.toggle("sa-active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  }
+</script>
+
+<script>
+  $(function () {
+    $("#sendcat").click(function () {
+        $.ajax({
+           url: '/panel/sendcat/{{m.id}}/',
+           data: { 'id': $("#select-category").val() , 'menu': $("#select-menu").val()},
+           type: 'post',
+           cache: false,
+           success: function updateDiv()
+  {
+    $( "#ref1" ).load(window.location.href + " #ref1" );
+  $( "#ref" ).load(window.location.href + " #ref" );
+   document.getElementById('select-category').value = "";
+  }
+        });
+    });
+  });
+
+
+  $(function () {
+    $("#sendpage").click(function () {
+        $.ajax({
+           url: '/panel/sendpage/{{m.id}}/',
+           data: { 'id': $("#select-page").val() , 'menu': $("#select-menu2").val()},
+           type: 'post',
+           cache: false,
+           success: function updateDiv()
+  {
+    $( "#ref1" ).load(window.location.href + " #ref1" );
+  $( "#ref" ).load(window.location.href + " #ref" );
+
+  }
+        });
+    });
+  });
+
+
+  $(function () {
+    $("#sendlink").click(function () {
+        $.ajax({
+           url: '/panel/sendlink/{{m.id}}/',
+           data: { 'title': $("#title1").val(), 'url': $("#url1").val() , 'menu': $("#select-menu1").val()},
+           type: 'post',
+           cache: false,
+           success: function updateDiv()
+  {
+  $( "#ref" ).load(window.location.href + " #ref" );
+  $( "#ref1" ).load(window.location.href + " #ref1" );
+
+   document.getElementById('select-menu1').value = "";
+   document.getElementById('title1').value = "";
+   document.getElementById('url1').value = "";
+  }
+        });
+    });
+  });
+</script>
+
+{% endblock %}

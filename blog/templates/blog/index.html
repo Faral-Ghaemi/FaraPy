@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+{% load static %}
+{% load thumbnail %}
+
+<html lang="fa">
+<head>
+    <link rel="stylesheet" href="{% static 'fardan/style.css' %}">
+    <link rel="stylesheet" href="{% static 'fardan/css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'fardan/css/icons.css' %}">
+    <link rel="stylesheet" href="{% static 'fardan/css/owl.carousel.min.css' %}">
+    <script type="text/javascript" src="{% static 'fardan/js/jquery-3.4.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fardan/js/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fardan/js/owl.carousel2.thumbs.js' %}"></script>
+    <script type="text/javascript" src="{% static 'fardan/js/settings.js' %}"></script>
+    <div class="navbar">
+       <div class="wrap over">
+           <a class="logo left" href="#" title="{{setting.persian_title}}"><img src="{{logo.url}}"><h2>{{setting.persian_title}}</h2> </a>
+           <div class="main-bar">
+               <div class="wrap relative">
+                   <nav class="main-menu">
+                       <ul>
+                           <li><a href="/">خانه</a></li>
+                            {% for c in mmenu.submenu_set.all %}{% if c.ismom == 1 %}
+                           <li><a href="{% if c.status == 0 %}{{c.subcat.furl}}{% elif c.status == 2 %} {{c.subpage.furl}}{% else %} {{c.suburl.furl}}{% endif %}">{{ c.title }}</a>
+                             {% endif %}
+
+                           {% endfor %}
+
+                       </ul>
+                   </nav>
+               </div>
+           </div>
+       </div>
+    </div>
+</head>
+<body>
+    <div class="first-row">
+        <div class="wrap over">
+            <div class="width-35 right">
+                <h2> {{setting.introduction}} </h2>
+                <form>
+                    <input type="text" placeholder="نام و نام خانوادگی">
+                    <input type="text" placeholder="شماره همراه شما">
+                    <input type="text" placeholder="موضوع مشاوره">
+                    <button type="submit">ارسال و یک شروع عالی!</button>
+                </form>
+            </div>
+            <div class="width-65 left">
+                <img src="{% static 'fardan/img/8.svg' %}">
+            </div>
+        </div>
+    </div>
+    <div class="second-row">
+        <div class="wrap over">
+            <div class="width-half right blob-sepidar center">
+                <img src="{% static 'fardan/img/Sepidar_Sep_Logo.png' %}">
+            </div>
+            <div class="width-half left">
+                <h2>فردان، نمایندگی رسمی سپیدار سیستم</h2>
+                <div class="accordion">
+                    <dl>
+                        <dt>
+                            <a href="#accordion1" aria-expanded="false" aria-controls="accordion1" class="accordion-title accordionTitle js-accordionTrigger">امکانات سپیدار</a>
+                        </dt>
+                        <dd class="accordion-content accordionItem is-collapsed" id="accordion1" aria-hidden="true">
+                            <p>توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات </p>
+                        </dd>
+                        <dt>
+                            <a href="#accordion2" aria-expanded="false" aria-controls="accordion2" class="accordion-title accordionTitle js-accordionTrigger">قیمت سپیدار</a>
+                        </dt>
+                        <dd class="accordion-content accordionItem is-collapsed" id="accordion2" aria-hidden="true">
+                            <p>توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات </p>
+                        </dd>
+                        <dt>
+                            <a href="#accordion3" aria-expanded="false" aria-controls="accordion3" class="accordion-title accordionTitle js-accordionTrigger">درخواست جلسه آشنایی رایگان</a>
+                        </dt>
+                        <dd class="accordion-content accordionItem is-collapsed" id="accordion3" aria-hidden="true">
+                            <form>
+                                <input type="text" placeholder="نام و نام هانوادگی">
+                                <input type="text" placeholder="شماره تماس">
+                                <button type="submit">رزرو جلسه رایگان</button>
+                            </form>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="third-row">
+        <div class="wrap over">
+            <div class="width-half left blob-sepidar bloob-abri center">
+                <img src="{% static 'fardan/img/rahkaran.png' %}">
+            </div>
+            <div class="width-half right">
+                <h2>فردان، نمایندگی رسمی راهکاران ابری</h2>
+                <div class="accordion">
+                    <dl>
+                        <dt>
+                            <a href="#accordion1" aria-expanded="false" aria-controls="accordion1" class="accordion-title accordionTitle js-accordionTrigger">معرفی راهکاران ابری</a>
+                        </dt>
+                        <dd class="accordion-content accordionItem is-collapsed" id="accordion1" aria-hidden="true">
+                            <p>توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات </p>
+                        </dd>
+                        <dt>
+                            <a href="#accordion2" aria-expanded="false" aria-controls="accordion2" class="accordion-title accordionTitle js-accordionTrigger">قیمت راهکاران ابری</a>
+                        </dt>
+                        <dd class="accordion-content accordionItem is-collapsed" id="accordion2" aria-hidden="true">
+                            <p>توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات توضیحات </p>
+                        </dd>
+                        <dt>
+                            <a href="#accordion3" aria-expanded="false" aria-controls="accordion3" class="accordion-title accordionTitle js-accordionTrigger">درخواست جلسه آشنایی رایگان</a>
+                        </dt>
+                        <dd class="accordion-content accordionItem is-collapsed" id="accordion3" aria-hidden="true">
+                            <form>
+                                <input type="text" placeholder="نام و نام هانوادگی">
+                                <input type="text" placeholder="شماره تماس">
+                                <button type="submit">رزرو جلسه رایگان</button>
+                            </form>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fourth-row">
+        <div class="wrap over">
+            <h4 class="center"> مورد اعتماد بیش از ۵،۰۰۰+ کسب و کار آنلاین </h4>
+            <ul>
+                <li><a href="#"><img src="{% static 'fardan/img/cafebazaar.png' %}"></a> </li>
+                <li><a href="#"><img src="{% static 'fardan/img/cinematicket.png' %}"></a> </li>
+                <li><a href="#"><img src="{% static 'fardan/img/asiatech.png' %}"></a> </li>
+                <li><a href="#"><img src="{% static 'fardan/img/pishgaman.png' %}"></a> </li>
+                <li><a href="#"><img src="{% static 'fardan/img/hamkaransystem.png' %}"></a> </li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'fardan/js/accordion.js' %}"></script>
+</body>
+</html>
