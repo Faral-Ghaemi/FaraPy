@@ -1,0 +1,8 @@
+setup.py
+bin/farapy.py
+farapy.egg-info/PKG-INFO
+farapy.egg-info/SOURCES.txt
+farapy.egg-info/dependency_links.txt
+farapy.egg-info/entry_points.txt
+farapy.egg-info/requires.txt
+farapy.egg-info/top_level.txt

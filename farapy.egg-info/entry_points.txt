@@ -1,0 +1,4 @@
+
+            [console_scripts]
+            farapy=bin.farapy:main
+    

@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: farapy
+Version: 1.32
+Summary: FaraPy is a smart content management system (CMS) written in Python.
+Home-page: https://faral.tech
+Author: Faral Team
+Author-email: faral.ghaemi@gmail.com
+License: BSD
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.6

@@ -1,1 +1,1 @@
-from Boshra.wsgi import application
+from FaraPy.wsgi import application
