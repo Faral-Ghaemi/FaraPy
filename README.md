@@ -12,12 +12,13 @@ FaraPy is an smart open source python CMS built on Django. FaraPy is a SEO frien
 
 local install on windows:
 
-just download the code
 if you have installed the python on your system jost go to foldre press the Shift + Right click and choose powershell or cmd
 then run this tow lines of commands:
 
 ``` bash
-pip install -r requirements.txt
+pip install farapy
+farapy start sampleproject
+cd sampleproject
 python manage.py runserver 80
 
 ```
